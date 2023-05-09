@@ -1,0 +1,4 @@
+requests
+simple-salesforce
+aws-lambda-powertools[aws-sdk]
+jmespath
