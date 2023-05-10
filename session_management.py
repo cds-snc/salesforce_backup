@@ -13,6 +13,8 @@ password = os.environ["SalesforcePass"]
 security_token = os.environ["SalesforceSecurityToken"]
 consumer_key = os.environ["SalesforceConsumerKey"]
 consumer_secret = os.environ["SalesforceConsumerSecret"]
+TEST_LOCAL = (os.getenv('TEST_LOCAL', 'false').lower() == 'true')
+DEBUG = (os.getenv('DEBUG', 'false').lower() == 'true')
 
 
 class TimeoutAdapter(requests.adapters.HTTPAdapter):
@@ -22,14 +24,32 @@ class TimeoutAdapter(requests.adapters.HTTPAdapter):
         kwargs["timeout"] = SALESFORCE_TIMEOUT_SECONDS
         return super().send(*args, **kwargs)
 
+def build_request_session() -> requests.Session:
+    """Return a requests session with a timeout adapter
+    
+    Returns:
+        requests.Session: the requests session with a timeout adapter
+    """
+    requests_session = requests.Session()
+    # Add a timeout to Salesforce API requests
+    requests_session.mount("https://", TimeoutAdapter())
+    requests_session.mount("http://", TimeoutAdapter())
+    return requests_session
+
 
 def open_session() -> Salesforce:
+    """Return an authenticated Salesforce session
+    
+    Returns:
+        Salesforce: the authenticated Salesforce session.
+    """
     session = get_session(
         username=user,
         password=password,
         security_token=security_token,
         consumer_key=consumer_key,
         consumer_secret=consumer_secret,
+
     )
     return session
 
@@ -54,26 +74,24 @@ def get_session(
         Salesforce: the authenticated Salesforce session.
     """
 
-    session = None
-    try:
-        # Add a timeout to Salesforce API requests
-        requests_session = requests.Session()
-        requests_session.mount("https://", TimeoutAdapter())
-        requests_session.mount("http://", TimeoutAdapter())
+    logger.debug(f"Salesforce login: {username}")
+    logger.debug(f"Salesforce domain: {'test' if DEBUG else None}")
+    logger.debug(f"Test local: {TEST_LOCAL}")
 
-        session = Salesforce(
+    try:
+        return Salesforce(
             client_id="Notify",
             username=username,
             password=password,
             security_token=security_token,
             consumer_key=consumer_key,
             consumer_secret=consumer_secret,
-            session=requests_session,
-            # domain="test",
+            session=build_request_session(),
+            domain="test" if DEBUG else None,
         )
     except Exception as ex:
         logger.error(f"Salesforce login failed: {ex}")
-    return session
+        return None
 
 
 def end_session(session: Salesforce):
