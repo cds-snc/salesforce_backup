@@ -4,6 +4,15 @@ from copy import deepcopy
 UNSUPPORTED_SOBJS = ["Scorecard", "ScorecardAssociation", "ScorecardMetric", "UserExternalCredential", "WebCartDocument"]
 
 def cleanup_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Cleans up records by removing unneeded fields and replacing newlines
+    
+    Args:
+        records (list[dict[str, Any]]): List of records
+        
+    Returns:
+        list[dict[str, Any]]: List of records with unneeded fields removed and newlines replaced
+    """
+
     records = remove_unneeded_fields(records, ["attributes"])
     records = replace_newlines_in_dict_values(records)
     return records
@@ -23,7 +32,8 @@ def replace_newlines_in_dict_values( dicts: list[dict[str, Any]]
     for record in new_dicts:
         for key, value in record.items():
             if isinstance(value, str):
-                record[key] = value.replace("\r\n", "\\r\\n")
+                record[key] = value.replace("\n", "\\n")
+                record[key] = value.replace("\r", "\\r")
     return new_dicts
 
 
@@ -48,6 +58,14 @@ def remove_unneeded_fields(
 
 
 def filter_out_sobjects(sobjs: list[str]) -> list[str]:
+    """Filters out unsupported sobjects
+    
+    Args:
+        sobjs (list[str]): List of sobjects
+        
+    Returns:
+        list[str]: List of sobjects with unsupported sobjects removed
+    """
     new_sobjs = deepcopy(sobjs)
     for u_sobj in UNSUPPORTED_SOBJS:
         if u_sobj in new_sobjs:
