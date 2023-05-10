@@ -1,7 +1,17 @@
-.PHONY: requirements requirements-dev clean test
+.PHONY: requirements requirements-dev clean test postCreateCommand
 
 # Default command runs the requirements and requriements-dev targets
 default: clean requirements requirements-dev
+
+run-local:
+	python main.py
+
+# Used by the devcontainer, you shouldn't have to run this
+postCreateCommand:
+	@echo "Run 'make' to install requirements and 'make test' to run tests"
+	@apt-get update && apt-get install -y --no-install-recommends \
+		tmu	\
+		vim
 
 # Install requirements
 requirements:
