@@ -21,6 +21,7 @@ module "oidc" {
 data "aws_iam_policy_document" "write_to_bucket" {
   // this statement allows writing to the cds-salesforce-backups s3 bucket
   statement {
+    effect = "Allow"
     actions = [
       "s3:PutObject",
       "s3:ListBucket",
@@ -29,6 +30,7 @@ data "aws_iam_policy_document" "write_to_bucket" {
       module.cds_salesforce_backups_bucket.s3_bucket_arn,
       "${module.cds_salesforce_backups_bucket.s3_bucket_arn}/*",
     ]
+
   }
 }
 
