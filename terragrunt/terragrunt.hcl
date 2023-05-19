@@ -6,11 +6,11 @@ inputs = {
   product_name              = "gc-design-system"
   account_id                = "563894450011"
   region                    = "ca-central-1"
-  billing_code              = "platform-core-services"
+  billing_code              = local.billing_code
 }
 
 locals { 
-  billng_code = inputs.billing_code
+  billng_code = "platform-core-services"
 }
 
 remote_state {
