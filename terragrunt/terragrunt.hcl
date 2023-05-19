@@ -10,7 +10,7 @@ inputs = {
 }
 
 locals { 
-  billng_code = "platform-core-services"
+  billing_code = "platform-core-services"
 }
 
 remote_state {
