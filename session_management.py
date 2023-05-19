@@ -13,8 +13,8 @@ password = os.environ["SalesforcePass"]
 security_token = os.environ["SalesforceSecurityToken"]
 consumer_key = os.environ["SalesforceConsumerKey"]
 consumer_secret = os.environ["SalesforceConsumerSecret"]
-TEST_LOCAL = (os.getenv('TEST_LOCAL', 'false').lower() == 'true')
-DEBUG = (os.getenv('DEBUG', 'false').lower() == 'true')
+TEST_LOCAL = os.getenv("TEST_LOCAL", "false").lower() == "true"
+DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 
 
 class TimeoutAdapter(requests.adapters.HTTPAdapter):
@@ -24,9 +24,10 @@ class TimeoutAdapter(requests.adapters.HTTPAdapter):
         kwargs["timeout"] = SALESFORCE_TIMEOUT_SECONDS
         return super().send(*args, **kwargs)
 
+
 def build_request_session() -> requests.Session:
     """Return a requests session with a timeout adapter
-    
+
     Returns:
         requests.Session: the requests session with a timeout adapter
     """
@@ -39,7 +40,7 @@ def build_request_session() -> requests.Session:
 
 def open_session() -> Salesforce:
     """Return an authenticated Salesforce session
-    
+
     Returns:
         Salesforce: the authenticated Salesforce session.
     """
@@ -49,7 +50,6 @@ def open_session() -> Salesforce:
         security_token=security_token,
         consumer_key=consumer_key,
         consumer_secret=consumer_secret,
-
     )
     return session
 

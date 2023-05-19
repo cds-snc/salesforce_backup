@@ -26,6 +26,11 @@ test:
 
 fmt:
 	black .
+	terraform fmt -recursive
+
+fmt-ci:
+	black . --check
+	terraform fmt -recursive -check
 
 clean:
 	@rm -rf csv

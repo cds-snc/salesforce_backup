@@ -61,7 +61,12 @@ def get_all_fields_for_object(session: Salesforce, name: str) -> list[dict[str, 
         list[dict[str, Any]]: List of fields
     """
     logger.info("Getting all fields for object")
+
     field_names = []
-    for field in session.__getattr__(name).describe()["fields"]:
+    fields = session.__getattr__(name).describe()["fields"]
+
+    for field in fields:
         field_names.append(field["name"])
+
+    logger.debug(f"Fields: {field_names}")
     return field_names
