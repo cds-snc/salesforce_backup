@@ -1,15 +1,15 @@
-terraform { 
+terraform {
   source = "."
 }
 
 inputs = {
-  product_name              = "gc-design-system"
-  account_id                = "563894450011"
-  region                    = "ca-central-1"
-  billing_code              = local.billing_code
+  product_name = "gc-design-system"
+  account_id   = "563894450011"
+  region       = "ca-central-1"
+  billing_code = local.billing_code
 }
 
-locals { 
+locals {
   billing_code = "platform-core-services"
 }
 

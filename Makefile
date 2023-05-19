@@ -10,7 +10,7 @@ run-local:
 postCreateCommand:
 	@echo "Run 'make' to install requirements and 'make test' to run tests"
 	@apt-get update && apt-get install -y --no-install-recommends \
-		tmu	\
+		tmux	\
 		vim
 
 # Install requirements
