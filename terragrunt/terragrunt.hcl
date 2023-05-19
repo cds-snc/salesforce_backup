@@ -18,11 +18,11 @@ remote_state {
   }
   config = {
     encrypt             = true
-    bucket              = "${local.billing_code}-salesforce-backup-tf"
+    bucket              = "${inputs.billing_code}-salesforce-backup-tf"
     dynamodb_table      = "terraform-state-lock-dynamo"
     region              = "ca-central-1"
     key                 = "${path_relative_to_include()}/terraform.tfstate"
-    s3_bucket_tags      = { CostCentre : local.billing_code }
-    dynamodb_table_tags = { CostCentre : local.billing_code }
+    s3_bucket_tags      = { CostCentre : inputs.billing_code }
+    dynamodb_table_tags = { CostCentre : inputs.billing_code }
   }
 }
