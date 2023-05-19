@@ -6,7 +6,7 @@ inputs = {
   product_name              = "gc-design-system"
   account_id                = "563894450011"
   region                    = "ca-central-1"
-  billing_code              = "internal-sre"
+  billing_code              = "platform-core-services"
 }
 
 
@@ -18,7 +18,7 @@ remote_state {
   }
   config = {
     encrypt             = true
-    bucket              = "${local.vars.inputs.cost_center_code}-tf"
+    bucket              = "${local.billing_code}-salesforce-backup-tf"
     dynamodb_table      = "terraform-state-lock-dynamo"
     region              = "ca-central-1"
     key                 = "${path_relative_to_include()}/terraform.tfstate"
