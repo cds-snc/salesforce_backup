@@ -1,4 +1,4 @@
-locals { 
+locals {
   salesforce_backup_role_name = "salesforce-backup-oidc"
 }
 
@@ -18,9 +18,9 @@ module "oidc" {
   ]
 }
 
-data "aws_iam_policy_document" "write_to_bucket" { 
+data "aws_iam_policy_document" "write_to_bucket" {
   // this statement allows writing to the cds-salesforce-backups s3 bucket
-  statement  {
+  statement {
     actions = [
       "s3:PutObject",
       "s3:ListBucket",

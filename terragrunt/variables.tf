@@ -3,7 +3,7 @@ variable "account_id" {
   type        = string
 }
 
-variable "cbs_satellite_bucket_name" {
-  description = "(Required) Name of the Cloud Based Sensor S3 satellite bucket"
+variable "region" {
+  description = "(Required) The region to perform actions in."
   type        = string
 }
