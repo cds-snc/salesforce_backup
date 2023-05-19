@@ -40,5 +40,5 @@ resource "aws_iam_role_policy" "write_to_bucket" {
 
 resource "aws_iam_role_policy_attachment" "oidc" {
   role       = local.salesforce_backup_role_name
-  policy_arn = aws_iam_role_policy.write_to_bucket
+  policy_arn = aws_iam_role_policy.write_to_bucket.id
 }
