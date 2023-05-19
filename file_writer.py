@@ -6,6 +6,7 @@ from queries import get_all_fields_for_object
 
 logger = Logger()
 
+
 def write_dict_to_csv(
     session: Salesforce, dicts: list[dict[str, Any]], sobj: str
 ) -> None:

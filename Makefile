@@ -10,7 +10,7 @@ run-local:
 postCreateCommand:
 	@echo "Run 'make' to install requirements and 'make test' to run tests"
 	@apt-get update && apt-get install -y --no-install-recommends \
-		tmu	\
+		tmux	\
 		vim
 
 # Install requirements
@@ -26,6 +26,11 @@ test:
 
 fmt:
 	black .
+	terraform fmt -recursive
+
+fmt-ci:
+	black . --check
+	terraform fmt -recursive -check
 
 clean:
 	@rm -rf csv

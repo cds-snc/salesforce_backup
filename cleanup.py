@@ -1,14 +1,24 @@
 from typing import Any
 from copy import deepcopy
+from aws_lambda_powertools import Logger
 
-UNSUPPORTED_SOBJS = ["Scorecard", "ScorecardAssociation", "ScorecardMetric", "UserExternalCredential", "WebCartDocument"]
+logger = Logger()
+
+UNSUPPORTED_SOBJS = [
+    "Scorecard",
+    "ScorecardAssociation",
+    "ScorecardMetric",
+    "UserExternalCredential",
+    "WebCartDocument",
+]
+
 
 def cleanup_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Cleans up records by removing unneeded fields and replacing newlines
-    
+
     Args:
         records (list[dict[str, Any]]): List of records
-        
+
     Returns:
         list[dict[str, Any]]: List of records with unneeded fields removed and newlines replaced
     """
@@ -18,7 +28,8 @@ def cleanup_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return records
 
 
-def replace_newlines_in_dict_values( dicts: list[dict[str, Any]]
+def replace_newlines_in_dict_values(
+    dicts: list[dict[str, Any]]
 ) -> list[dict[str, Any]]:
     """Replaces newlines in the values of a dictionary
 
@@ -34,6 +45,7 @@ def replace_newlines_in_dict_values( dicts: list[dict[str, Any]]
             if isinstance(value, str):
                 record[key] = value.replace("\n", "\\n")
                 record[key] = value.replace("\r", "\\r")
+    logger.debug(f"Replaced newlines in dict values")
     return new_dicts
 
 
@@ -59,10 +71,10 @@ def remove_unneeded_fields(
 
 def filter_out_sobjects(sobjs: list[str]) -> list[str]:
     """Filters out unsupported sobjects
-    
+
     Args:
         sobjs (list[str]): List of sobjects
-        
+
     Returns:
         list[str]: List of sobjects with unsupported sobjects removed
     """
@@ -70,4 +82,5 @@ def filter_out_sobjects(sobjs: list[str]) -> list[str]:
     for u_sobj in UNSUPPORTED_SOBJS:
         if u_sobj in new_sobjs:
             new_sobjs.remove(u_sobj)
+    logger.debug(f"Filtered out unsupported sobjects: {new_sobjs}")
     return new_sobjs

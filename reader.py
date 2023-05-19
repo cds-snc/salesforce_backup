@@ -8,6 +8,7 @@ from file_writer import write_dict_to_csv, write_dict_to_file
 logger = Logger()
 PAGE_SIZE = 200
 
+
 def get_all_objects(session: Salesforce) -> list[dict[str, Any]]:
     """Gets all objects from Salesforce
 
@@ -20,13 +21,13 @@ def get_all_objects(session: Salesforce) -> list[dict[str, Any]]:
     """
     logger.info("Getting all objects")
     query = "SELECT SObjectType FROM ObjectPermissions GROUP BY SObjectType ORDER BY SObjectType ASC"
-    results = query_all(session, query)
-    filter_out_sobjects(results)
     return query_all(session, query)
 
 
 def build_query_all_records(sobj, page, offset):
-    return f"SELECT FIELDS(ALL) FROM {sobj} ORDER BY Id LIMIT {page} OFFSET {offset}"
+    query = f"SELECT FIELDS(ALL) FROM {sobj} ORDER BY Id LIMIT {page} OFFSET {offset}"
+    logger.debug(f"Query: {query}")
+    return query
 
 
 def get_all_records(session: Salesforce, sobj: str) -> list[dict[str, Any]]:
@@ -37,24 +38,21 @@ def get_all_records(session: Salesforce, sobj: str) -> list[dict[str, Any]]:
     """
 
     offset = 0
-    logger.info(f"Getting all records for {sobj}")
+    logger.debug(f"Getting all records for {sobj}")
 
     retval = []
 
     query = build_query_all_records(sobj, PAGE_SIZE, offset)
-    logger.debug(f"Query: {query}")
     results = query_all(session, query)
 
     while len(results) != 0:
         retval.extend(results)
         offset += PAGE_SIZE
         query = build_query_all_records(sobj, PAGE_SIZE, offset)
-        logger.debug(f"Query: {query}")
         results = query_all(session, query)
 
+    logger.debug(f"Found {len(retval)} records for {sobj}")
     return retval
-
-
 
 
 def get_all_tables(session: Salesforce) -> list[dict[str, Any]]:
@@ -67,18 +65,12 @@ def get_all_tables(session: Salesforce) -> list[dict[str, Any]]:
     result = get_all_objects(session)
     sObjects = [record["SobjectType"] for record in result]
     sObjects = filter_out_sobjects(sObjects)
-    logger.debug(f"sObjects: {sObjects}")
-
-    fields = get_all_fields_for_object(session, "Account")
-    logger.debug(f"Fields: {fields}")
 
     for object in sObjects:
         records = get_all_records(session, object)
 
         if not records:
-            logger.info(f"No records found for {object}")
             continue
-
 
         records = cleanup_records(records)
 

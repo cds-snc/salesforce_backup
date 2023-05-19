@@ -5,6 +5,11 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/python:0-3.11",
 	"features": {
+		"ghcr.io/devcontainers/features/terraform": {
+			"version": "1.4.6",
+			"terragrunt": "0.45.14"
+
+		},
 		"ghcr.io/devcontainers/features/aws-cli:1": {
 			"version": "latest"
 		},
