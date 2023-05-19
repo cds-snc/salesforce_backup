@@ -7,3 +7,8 @@ variable "region" {
   description = "(Required) The region to perform actions in."
   type        = string
 }
+
+variable "billing_code" {
+  description = "(Required) The billing code to use for resources."
+  type        = string
+}
