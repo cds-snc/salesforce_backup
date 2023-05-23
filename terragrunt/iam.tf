@@ -1,5 +1,5 @@
 locals {
-  salesforce_backup_role_name = "salesforce-backup-oidc"
+  salesforce_backup_role_name = "salesforce-backup"
 }
 
 module "oidc" {
@@ -11,7 +11,7 @@ module "oidc" {
 
   roles = [
     {
-      name      = "salesforce-backup"
+      name      = local.salesforce_backup_role_name
       repo_name = "salesforce_backup"
       claim     = "ref:refs/heads/main"
     }
