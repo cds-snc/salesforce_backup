@@ -34,15 +34,14 @@ data "aws_iam_policy_document" "write_to_bucket" {
   }
 }
 
-resource "aws_iam_role_policy" "write_to_bucket" {
+resource "aws_iam_policy" "write_to_bucket" {
   name   = "write_to_salesforce_bucket"
-  role   = local.salesforce_backup_role_name
   policy = data.aws_iam_policy_document.write_to_bucket.json
 }
 
 resource "aws_iam_role_policy_attachment" "oidc" {
   role       = local.salesforce_backup_role_name
-  policy_arn = aws_iam_role_policy.write_to_bucket.id
+  policy_arn = aws_iam_policy.write_to_bucket.id
 
   depends_on = [
     module.oidc,
