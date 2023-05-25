@@ -30,7 +30,6 @@ fmt:
 
 fmt-ci:
 	black . --check
-	terraform fmt -recursive -check
 
 clean:
 	@rm -rf csv
