@@ -1,10 +1,5 @@
-# Generic Project Template
+# Salesforce Backup 
 
-This repository provides some base files for setting up a repository at
-CDS. Plan is to create more project template for specific technologies:
+This repository stores our code for backing all objects from our salesforce instance to an s3 bucket in our organization. 
 
-- project-template-terraform
-- project-template-python
-- project-template-nodejs
-
-Note that default community health files are maintained at https://github.com/cds-snc/.github 
+**Please Note** While you may be able to recover using the data stored here there is no guarantee that you will be able to, we will not be implementing code to restore from this data and you would be better off paying for a 3rd party Salesforce backup solution if that is your goal in looking at this repo. 

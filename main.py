@@ -3,7 +3,7 @@ from aws_lambda_powertools import Logger
 from session_management import open_session, end_session
 from reader import get_all_tables
 
-TEST_LOCAL = os.getenv("TEST_LOCAL", "false") == "True"
+# TEST_LOCAL = os.getenv("TEST_LOCAL", "false").lower() == "true"
 
 logger = Logger()
 
@@ -24,8 +24,7 @@ def main() -> None:
         logger.error("Script ended in error")
         return
 
-    if TEST_LOCAL:
-        setup_local_env()
+    setup_local_env()
 
     get_all_tables(sf)
 

@@ -43,8 +43,7 @@ def replace_newlines_in_dict_values(
     for record in new_dicts:
         for key, value in record.items():
             if isinstance(value, str):
-                record[key] = value.replace("\n", "\\n")
-                record[key] = value.replace("\r", "\\r")
+                record[key] = value.encode("unicode_escape").decode("utf-8")
     logger.debug(f"Replaced newlines in dict values")
     return new_dicts
 
