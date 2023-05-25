@@ -16,11 +16,11 @@ env:
   LOG_LEVEL: "INFO"
   DEBUG: "true"
   POWERTOOL_SERVICE_NAME: "GHAction"
-  SalesforceConsumerKey: ${{ secret.SALESFORCE_CONSUMER_KEY }}
-  SalesforceConsumerSecret: ${{ secret.SALESFORCE_CONSUMER_SECRET }}
-  SalesforcePass: ${{ secret.SALESFORCE_PASSWORD }}
-  SalesforceSecurityToken: ${{ secret.SALESFORCE_SECURITY_TOKEN }}
-  SalesforceUser: ${{ secret.SALESFORCE_USER }}
+  SalesforceConsumerKey: ${{ secrets.SALESFORCE_CONSUMER_KEY }}
+  SalesforceConsumerSecret: ${{ secrets.SALESFORCE_CONSUMER_SECRET }}
+  SalesforcePass: ${{ secrets.SALESFORCE_PASSWORD }}
+  SalesforceSecurityToken: ${{ secrets.SALESFORCE_SECURITY_TOKEN }}
+  SalesforceUser: ${{ secrets.SALESFORCE_USER }}
   SALESFORCE_TIMEOUT_SECONDS: 30
 jobs:
   s3-backup:
