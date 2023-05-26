@@ -1,4 +1,4 @@
-name: Salesforce Backup
+name: S3 Backup
 on:
   workflow_dispatch:
   schedule:

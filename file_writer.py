@@ -13,7 +13,7 @@ def write_dict_to_csv(
     """Writes a dictionary to a CSV file
 
     Args:
-        dict (dict[str, Any]): Dictionary to write
+        dicts (list[dict[str, Any]]): list of dicts to write to a csv
         filename (str): Filename to write to
     """
     columns = get_all_fields_for_object(session, sobj)
@@ -29,7 +29,7 @@ def write_dict_to_file(dicts: list[dict[str, Any]], filename: str) -> None:
     """Writes a dictionary to a file
 
     Args:
-        dict (dict[str, Any]): Dictionary to write
+        dicts (list[dict[str, Any]]): list of Dictionaries to write
         filename (str): Filename to write to
     """
 

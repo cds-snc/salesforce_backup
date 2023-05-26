@@ -9,7 +9,7 @@ run-local:
 # Used by the devcontainer, you shouldn't have to run this
 postCreateCommand:
 	@echo "Run 'make' to install requirements and 'make test' to run tests"
-	@apt-get update && apt-get install -y --no-install-recommends \
+	@sudo apt-get update && apt-get install -y --no-install-recommends \
 		tmux	\
 		vim
 
