@@ -13,8 +13,7 @@ permissions:
   statuses: write
 
 env:
-  LOG_LEVEL: "INFO"
-  DEBUG: "true"
+  LOG_LEVEL: "WARN"
   POWERTOOL_SERVICE_NAME: "GHAction"
   SalesforceConsumerKey: ${{ secrets.SALESFORCE_CONSUMER_KEY }}
   SalesforceConsumerSecret: ${{ secrets.SALESFORCE_CONSUMER_SECRET }}
@@ -22,6 +21,7 @@ env:
   SalesforceSecurityToken: ${{ secrets.SALESFORCE_SECURITY_TOKEN }}
   SalesforceUser: ${{ secrets.SALESFORCE_USER }}
   SALESFORCE_TIMEOUT_SECONDS: 30
+
 jobs:
   s3-backup:
     runs-on: ubuntu-latest
@@ -46,13 +46,6 @@ jobs:
 
     - name: pull down file
       run: make run-local
-
-    - name: Create ZIP bundle
-      run: |
-        ZIP_FILE=`basename ${{ github.repository }}`-`date '+%Y-%m-%d'`.zip
-        zip -rq "${ZIP_FILE}" .
-        mkdir -p ${{ github.repository }}
-        mv "${ZIP_FILE}" ${{ github.repository }}
 
     - name: Upload to S3 bucket
       run: |
