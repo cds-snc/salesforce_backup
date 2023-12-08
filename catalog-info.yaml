@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: salesforce-backup
-  description: null
+  name: "salesforce-backup"
+  description: "Salesforce backup repository"
   labels:
     license: MIT
 spec:
